@@ -57,7 +57,7 @@ const nextSequence = () => {
 
 //function for simulating the level sequence
 const simulateSequence = () => {
-  let interval = 500;
+  let interval = 1000;
   setTitle();
   for (let i = 0; i < sequence.length; i++) {
     setTimeout(() => {
