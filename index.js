@@ -75,7 +75,8 @@ const gameOver = () => {
   setTimeout(() => {
     $("body").removeClass("game-over");
   }, 800);
-  new Audio(`./sounds/wrong.mp3`).play();
+  const sound = new Audio(`./sounds/wrong.mp3`);
+  sound.play();
   sequence = [];
   userInput = [];
   i = 0;
@@ -92,7 +93,9 @@ const validate = () => {
     colours.indexOf(sequence[userInput.length - 1])
   ) {
     gameOver();
+    return false;
   }
+  return true;
 };
 
 //handling the user clik event accordingly
@@ -103,7 +106,8 @@ $(".btn").on("click", (e) => {
   animateButton(clickedColour);
   const sound = new Audio(`./sounds/${clickedColour}.mp3`);
   sound.play();
-  validate();
-  i++;
-  nextSequence();
+  if (validate()) {
+    i++;
+    nextSequence();
+  }
 });
