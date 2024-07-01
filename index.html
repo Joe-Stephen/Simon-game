@@ -6,34 +6,33 @@
   <title>Simon</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-  <h1 id="level-title"> </h1>
-  <div class="container">
-    <div lass="row">
 
-      <div type="button" id="green" class="btn green">
-
-      </div>
-
-      <div type="button" id="red" class="btn red">
-
-      </div>
+  <div class="flex-container">
+    <div id="scoreTableContainer">
+      <h2 id="highscore-title">Top Scores</h2>
+      <ul id="scoreTable"></ul>
     </div>
 
-    <div class="row">
-
-      <div type="button" id="yellow" class="btn yellow">
-
+    <div class="game-container">
+      <h1 id="level-title"></h1>
+      <div class="container">
+        <div class="row">
+          <div type="button" id="green" class="btn green"></div>
+          <div type="button" id="red" class="btn red"></div>
+        </div>
+        <div class="row">
+          <div type="button" id="yellow" class="btn yellow"></div>
+          <div type="button" id="blue" class="btn blue"></div>
+        </div>
       </div>
-      <div type="button" id="blue" class="btn blue">
-
-      </div>
-
     </div>
-
   </div>
+
+  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
   <script src="./index.js"></script>

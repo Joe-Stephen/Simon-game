@@ -1,3 +1,73 @@
+//collecting use name at page reload
+let userName = "";
+
+// Prompt user for their name on page load
+window.onload = function () {
+  userName = prompt("Please enter your name:", "Player");
+  if (userName == null || userName == "") {
+    userName = "Anonymous"; // Default name if user doesn't enter a name
+  }
+};
+
+//firebase config and data managing
+
+let firebaseConfig = {
+  apiKey: "AIzaSyBM_sYNmV5h-UBkMi-jWvTdKiORdHquOxs",
+  authDomain: "simon-game-74fd3.firebaseapp.com",
+  projectId: "simon-game-74fd3",
+  storageBucket: "simon-game-74fd3.appspot.com",
+  messagingSenderId: "60510752940",
+  appId: "1:60510752940:web:214eda33e32af87d918f09",
+  measurementId: "G-HLG3PMV1DZ",
+  databaseURL: "https://simon-game-74fd3-default-rtdb.firebaseio.com/",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+let messagesRef = firebase.database().ref("Top scores");
+
+//function to save the user name and thier score
+const saveScore = (name, score) => {
+  if (score < 0) return;
+  let newScoreRef = messagesRef.push();
+  newScoreRef.set({
+    name: name,
+    score: score,
+    timestamp: Date.now(), // Optional: add a timestamp to sort by recent scores
+  });
+};
+
+// Retrieve and display the top scores from Firebase
+function displayTopScores() {
+  messagesRef
+    .orderByChild("score")
+    .limitToLast(5)
+    .once("value", function (snapshot) {
+      let scoreTable = document.getElementById("scoreTable");
+      scoreTable.innerHTML = ""; // Clear previous scores
+
+      let scores = [];
+      snapshot.forEach(function (childSnapshot) {
+        let childData = childSnapshot.val();
+        scores.push(childData); // Collect all scores
+      });
+
+      // Sort the scores in descending order
+      scores.sort((a, b) => b.score - a.score);
+
+      // Display the scores
+      scores.forEach((scoreData) => {
+        let listItem = document.createElement("li");
+        listItem.textContent = `${scoreData.name}: ${scoreData.score}`;
+        scoreTable.appendChild(listItem);
+      });
+    });
+}
+
+// Call the function to display top scores
+displayTopScores();
+
+//game logic
 //settig the default colours for the game
 const colours = ["green", "red", "yellow", "blue"];
 
@@ -77,6 +147,8 @@ const gameOver = () => {
   }, 800);
   const sound = new Audio(`./sounds/wrong.mp3`);
   sound.play();
+  //saving the score to database
+  saveScore(userName, level - 1);
   sequence = [];
   userInput = [];
   i = 0;
