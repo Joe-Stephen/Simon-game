@@ -149,6 +149,7 @@ const gameOver = () => {
   sound.play();
   //saving the score to database
   saveScore(userName, level - 1);
+  displayTopScores();
   sequence = [];
   userInput = [];
   i = 0;
